@@ -1,0 +1,26 @@
+{
+  "name": "@pallad/migrator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "pallad-scripts test",
+    "compile": "pallad-scripts compile",
+    "lint": "pallad-scripts lint",
+    "prepare": "npm run compile"
+  },
+  "keywords": [
+    "typescript",
+    "migration"
+  ],
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "dependencies": {
+    "predicates": "^2.0.3",
+    "zen-observable": "^0.8.15"
+  }
+}
