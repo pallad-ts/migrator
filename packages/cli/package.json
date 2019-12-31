@@ -8,6 +8,9 @@
     "compile": "../../node_modules/.bin/pallad-scripts compile",
     "lint": "npx pallad-scripts lint"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "bin",
     "compiled",

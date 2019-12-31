@@ -7,6 +7,9 @@
   "directories": {
     "test": "test"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "compiled"
   ],
