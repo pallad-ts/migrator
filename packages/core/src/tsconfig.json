@@ -1,0 +1,12 @@
+{
+  "extends": "@pallad/scripts/tsconfig-node.dist.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../compiled",
+    "composite": true,
+    "importHelpers": true
+  },
+  "include": [
+    "**/*"
+  ]
+}

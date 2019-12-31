@@ -5,6 +5,7 @@ import Observable = require("zen-observable");
 import * as is from 'predicates';
 import {MigrationsList} from "./MigrationsList";
 import {State} from "./State";
+import {Status} from "./Status";
 
 function assertHasDownMigration(migration: Migration) {
     if (!is.hasProperty('down', migration)) {
@@ -18,15 +19,16 @@ export class Migrator {
     }
 
     async getState(): Promise<State[]> {
+        await this.stateManager.setup();
         const records = await this.stateManager.getState();
-        const recordsMap = new Map<string, State.Status.Record>();
+        const recordsMap = new Map<string, Status.Record>();
 
         for (const record of records) {
             recordsMap.set(record.name, record.status);
         }
 
         return this.migrations
-            .sorted
+            .getSorted()
             .map(x => {
                 return {
                     migration: x,
@@ -53,7 +55,7 @@ export class Migrator {
                     return plan;
                 }
 
-                if (State.Status.isPending(entry.status)) {
+                if (Status.isPending(entry.status)) {
                     plan.push({
                         migration: entry.migration,
                         direction
@@ -67,7 +69,7 @@ export class Migrator {
                     return plan;
                 }
 
-                if (State.Status.isFinished(entry.status)) {
+                if (Status.isFinished(entry.status)) {
                     assertHasDownMigration(entry.migration);
                     plan.push({
                         migration: entry.migration,
@@ -88,23 +90,23 @@ export class Migrator {
             const unlock = async () => {
                 try {
                     await this.stateManager.unlock();
-                    observer.next(Migrator.Progress.unlockSuccess());
+                    observer.next(new Migrator.Progress.UnlockSuccess());
                 } catch (e) {
-                    observer.next(Migrator.Progress.unlockFailure(e));
+                    observer.next(new Migrator.Progress.UnlockFailure(e));
                 }
             };
 
             (async () => {
                 try {
                     await this.stateManager.lock();
-                    observer.next(Migrator.Progress.lockSuccess());
+                    observer.next(new Migrator.Progress.LockSuccess());
                 } catch (e) {
-                    observer.next(Migrator.Progress.lockFailure(e));
+                    observer.next(new Migrator.Progress.LockFailure(e));
                     return;
                 }
                 for (const entry of plan) {
                     try {
-                        observer.next(Migrator.Progress.migrationStarted(entry));
+                        observer.next(new Migrator.Progress.MigrationStarted(entry));
                         const result = await entry.migration[direction]!();
                         if (Migration.isSkip(result)) {
                             if (isUp) {
@@ -114,7 +116,7 @@ export class Migrator {
                                     status: 'skipped'
                                 });
                             }
-                            observer.next(Migrator.Progress.migrationSkipped(entry));
+                            observer.next(new Migrator.Progress.MigrationSkipped(entry));
                         } else {
                             if (isUp) {
                                 await this.stateManager.saveRecord({
@@ -125,10 +127,10 @@ export class Migrator {
                             } else {
                                 await this.stateManager.deleteRecord(entry.migration.name);
                             }
-                            observer.next(Migrator.Progress.migrationFinished(entry));
+                            observer.next(new Migrator.Progress.MigrationFinished(entry));
                         }
                     } catch (e) {
-                        observer.next(Migrator.Progress.migrationFailed(entry, e));
+                        observer.next(new Migrator.Progress.MigrationFailed(entry, e));
                         break;
                     }
                 }
@@ -152,70 +154,52 @@ export class Migrator {
 
 export namespace Migrator {
     export type Direction = 'up' | 'down';
-    export type Progress = ReturnType<typeof Progress.lockSuccess> |
-        ReturnType<typeof Progress.lockFailure> |
-        ReturnType<typeof Progress.unlockSuccess> |
-        ReturnType<typeof Progress.unlockFailure> |
-        ReturnType<typeof Progress.migrationStarted> |
-        ReturnType<typeof Progress.migrationSkipped> |
-        ReturnType<typeof Progress.migrationFailed> |
-        ReturnType<typeof Progress.migrationFinished>;
+    export type Progress = Progress.LockSuccess |
+        Progress.LockFailure |
+        Progress.UnlockSuccess |
+        Progress.UnlockFailure |
+        Progress.MigrationStarted |
+        Progress.MigrationSkipped |
+        Progress.MigrationFailed |
+        Progress.MigrationFinished;
 
     export namespace Progress {
+        export class LockSuccess {
 
-        export function lockSuccess() {
-            return {
-                type: 'lock-success'
-            };
         }
 
-        export function lockFailure(error: Error) {
-            return {
-                type: 'lock-failure',
-                error
-            };
+        export class LockFailure {
+            constructor(readonly error: Error) {
+            }
         }
 
-        export function unlockSuccess() {
-            return {
-                type: 'unlock-success'
-            };
+        export class UnlockSuccess {
+
         }
 
-        export function unlockFailure(error: Error) {
-            return {
-                type: 'unlock-failure',
-                error
-            };
+        export class UnlockFailure {
+            constructor(readonly error: Error) {
+            }
         }
 
-        export function migrationStarted(planEntry: PlanEntry) {
-            return {
-                type: 'migration-started',
-                planEntry
-            };
+        export class MigrationStarted {
+            constructor(readonly planEntry: PlanEntry) {
+            }
         }
 
-        export function migrationSkipped(planEntry: PlanEntry) {
-            return {
-                type: 'migration-skipped',
-                planEntry
-            };
+        export class MigrationSkipped {
+            constructor(readonly planEntry: PlanEntry) {
+            }
         }
 
-        export function migrationFailed(planEntry: PlanEntry, error: Error) {
-            return {
-                type: 'migration-failed',
-                planEntry,
-                error
-            };
+        export class MigrationFailed {
+            constructor(readonly planEntry: PlanEntry, readonly error: Error) {
+            }
         }
 
-        export function migrationFinished(planEntry: PlanEntry) {
-            return {
-                type: 'migration-finished',
-                planEntry
-            };
+        export class MigrationFinished {
+            constructor(readonly planEntry: PlanEntry) {
+            }
         }
     }
 }

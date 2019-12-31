@@ -1,0 +1,26 @@
+{
+  "name": "@pallad/migrator-loader-javascript",
+  "version": "1.0.0",
+  "description": "Migrations loader for javascript",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint"
+  },
+  "keywords": [
+    "migrator",
+    "javascript",
+    "typescript"
+  ],
+  "dependencies": {
+    "@pallad/migrator-core": "*",
+    "glob": "^7.1.6"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT"
+}

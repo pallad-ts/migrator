@@ -1,7 +1,7 @@
 import {Migration} from "./Migration";
-import {Direction} from "./types";
+import {Migrator} from "./Migrator";
 
 export interface PlanEntry {
     migration: Migration;
-    direction: Direction;
+    direction: Migrator.Direction;
 }

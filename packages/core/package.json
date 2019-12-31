@@ -1,5 +1,5 @@
 {
-  "name": "@pallad/migrator",
+  "name": "@pallad/migrator-core",
   "version": "1.0.0",
   "description": "",
   "main": "compiled/index.js",
@@ -7,10 +7,13 @@
   "directories": {
     "test": "test"
   },
+  "files": [
+    "compiled"
+  ],
   "scripts": {
-    "test": "pallad-scripts test",
-    "compile": "pallad-scripts compile",
-    "lint": "pallad-scripts lint",
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint",
     "prepare": "npm run compile"
   },
   "keywords": [
@@ -20,7 +23,9 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
+    "alpha-errors": "^0.3.0",
     "predicates": "^2.0.3",
+    "tslib": "^1.10.0",
     "zen-observable": "^0.8.15"
   }
 }

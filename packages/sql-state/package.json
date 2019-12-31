@@ -1,0 +1,28 @@
+{
+  "name": "@pallad/migrator-sql-state",
+  "version": "1.0.0",
+  "description": "State manager for SQL databases",
+  "main": "compiled/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint"
+  },
+  "keywords": [
+    "migrator",
+    "sql",
+    "state"
+  ],
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "dependencies": {
+    "@pallad/migrator-core": "*",
+    "knex": "^0.20.6"
+  },
+  "devDependencies": {
+    "pg": "^7.17.0"
+  }
+}

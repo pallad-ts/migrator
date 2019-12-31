@@ -13,7 +13,7 @@ export class MigrationsList {
         return this;
     }
 
-    get sorted() {
+    getSorted(): Migration[] {
         return this.migrations.sort((a, b) => {
             return a.name.localeCompare(b.name);
         });

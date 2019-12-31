@@ -1,6 +1,8 @@
-import {State} from "./State";
+import {Status} from "./Status";
 
 export abstract class StateManager {
+    abstract setup(): Promise<void>;
+
     abstract getState(): Promise<StateManager.Record[]>;
 
     abstract lock(): Promise<void>;
@@ -18,6 +20,6 @@ export namespace StateManager {
     export interface Record {
         name: string;
         date: Date;
-        status: State.Status.Record;
+        status: Status.Record;
     }
 }

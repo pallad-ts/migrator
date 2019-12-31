@@ -24,4 +24,12 @@ export namespace Migration {
     export function is(value: any): value is Migration {
         return isMigration(value);
     }
+
+    export class Simple extends Migration {
+        constructor(readonly name: string,
+                    readonly up: Migration['up'],
+                    readonly down: Migration['down']) {
+            super();
+        }
+    }
 }
