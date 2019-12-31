@@ -19,7 +19,7 @@ export class StateManager extends _StateManager {
     async setup() {
         const hasTable = await this.knex.schema.hasTable(this.table);
         if (!hasTable) {
-            await this.knex.schema.createTable(this.table, (t) => {
+            await this.knex.schema.createTable(this.table, t => {
                 t.string('name');
                 t.dateTime('date');
                 t.string('status');
@@ -37,14 +37,13 @@ export class StateManager extends _StateManager {
     async lock(): Promise<void> {
         try {
             await this.knex.schema.createTable(this.lockTableName, t => {
-
+                // nothing
             });
         } catch (e) {
             if (e.code === '42P07') {
                 throw ERRORS.LOCK_ALREADY_CREATED();
-            } else {
-                throw e;
             }
+            throw e;
         }
     }
 
@@ -55,9 +54,8 @@ export class StateManager extends _StateManager {
         } catch (e) {
             if (e.code === '23505') {
                 throw ERRORS.RECORD_DUPLICATE(`Migrator record "${record.name}" already created`);
-            } else {
-                throw e;
             }
+            throw e;
         }
     }
 
@@ -67,9 +65,8 @@ export class StateManager extends _StateManager {
         } catch (e) {
             if (e.code === '42P01') {
                 throw ERRORS.NO_LOCK_TO_REMOVE();
-            } else {
-                throw e;
             }
+            throw e;
         }
     }
 

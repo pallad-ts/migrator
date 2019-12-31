@@ -37,7 +37,7 @@ export class Migrator {
             });
     }
 
-    async getPlan(direction: Migrator.Direction, to?: string): Promise<Array<PlanEntry>> {
+    async getPlan(direction: Migrator.Direction, to?: string): Promise<PlanEntry[]> {
         const state = await this.getState();
 
         if (to) {
@@ -47,7 +47,7 @@ export class Migrator {
             }
         }
 
-        const plan: Array<PlanEntry> = [];
+        const plan: PlanEntry[] = [];
         if (direction === 'up') {
             // collect all pending migrations from the beginning
             for (const entry of state) {

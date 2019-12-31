@@ -23,7 +23,8 @@
     "@pallad/migrator-core": "*",
     "chalk": "^3.0.0",
     "find-package-json": "^1.2.0",
-    "predicates": "^2.0.3"
+    "predicates": "^2.0.3",
+    "zen-observable": "^0.8.15"
   },
   "oclif": {
     "commands": "./compiled/commands",

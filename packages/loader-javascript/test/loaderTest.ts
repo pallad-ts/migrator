@@ -2,8 +2,8 @@ import * as path from 'path';
 import {loader} from "@src/loader";
 
 describe('loader', () => {
-    it('typescript', async () => {
-        const loaded = await loader({
+    it('typescript', () => {
+        const loaded = loader({
             directories: [
                 path.join(__dirname, './fixtures/case_ts')
             ],
@@ -17,8 +17,8 @@ describe('loader', () => {
             ]);
     });
 
-    it('javascript', async () => {
-        const loaded = await loader({
+    it('javascript', () => {
+        const loaded = loader({
             directories: [
                 path.join(__dirname, './fixtures/case_js')
             ],
@@ -32,9 +32,8 @@ describe('loader', () => {
             ]);
     });
 
-    it('mixed', async () => {
-
-        const loaded = await loader({
+    it('mixed', () => {
+        const loaded = loader({
             directories: [
                 path.join(__dirname, './fixtures/case_js'),
                 path.join(__dirname, './fixtures/case_ts'),

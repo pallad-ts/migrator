@@ -1,3 +1,6 @@
 {
-  "extends": "@pallad/scripts/tslint.dist.json"
+  "extends": "@pallad/scripts/tslint.dist.json",
+  "rules": {
+    "await-promise": false
+  }
 }
