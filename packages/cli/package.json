@@ -34,5 +34,6 @@
     ]
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
 }
