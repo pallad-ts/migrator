@@ -1,0 +1,22 @@
+{
+  "name": "@pallad/migrator-module",
+  "version": "1.0.0",
+  "description": "Module of @pallad/migrator for @pallad/modules",
+  "main": "compiled/index.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "dependencies": {
+    "@pallad/migrator-core": "^1.0.0"
+  },
+  "devDependencies": {
+    "@pallad/modules": "^1.0.0",
+    "alpha-dic": "^1.1.3"
+  },
+  "peerDependencies": {
+    "@pallad/modules": "^1.0.0",
+    "alpha-dic": "^1.1.3"
+  }
+}

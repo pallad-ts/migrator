@@ -41,8 +41,12 @@ function loadFromPath(path: string) {
 }
 
 function getFuncFromModule(module: any, path: string) {
+    if (is.func(module)) {
+        return module;
+    }
+
     if (!is.hasProperty('default', module)) {
-        throw new Error(`There is no default export in module: ${path}`);
+        throw new Error(`There is no default export or module is not a function at path: ${path} `);
     }
 
     if (!is.func(module.default)) {
