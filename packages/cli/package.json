@@ -6,7 +6,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "npm run compile && ../../node_modules/.bin/oclif-dev manifest",
     "compile": "../../node_modules/.bin/pallad-scripts compile",
-    "lint": "npx pallad-scripts lint"
+    "lint": "../../node_modules/.bin/pallad-scripts lint"
   },
   "publishConfig": {
     "access": "public"
