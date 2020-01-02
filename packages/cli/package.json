@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI for @pallad/migrator",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
