@@ -12,6 +12,8 @@ export abstract class StateManager {
     abstract saveRecord(record: StateManager.Record): Promise<void>;
 
     abstract deleteRecord(migrationName: string): Promise<void>;
+
+    abstract stop(): Promise<void>;
 }
 
 export namespace StateManager {

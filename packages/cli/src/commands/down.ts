@@ -24,5 +24,7 @@ export default class Down extends Command {
         } else {
             outputMigrationProcess(this, await migrator.runTo('down', args.to));
         }
+
+        await migrator.stop();
     }
 }

@@ -70,6 +70,10 @@ export class StateManager extends _StateManager {
         }
     }
 
+    async stop() {
+        await this.knex.destroy();
+    }
+
     static create(options: { knex: Knex, table: string }) {
         return new StateManager(options.knex, options.table);
     }

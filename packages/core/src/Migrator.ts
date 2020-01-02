@@ -37,6 +37,10 @@ export class Migrator {
             });
     }
 
+    async stop(): Promise<void> {
+        await this.stateManager.stop();
+    }
+
     async getPlan(direction: Migrator.Direction, to?: string): Promise<PlanEntry[]> {
         const state = await this.getState();
 

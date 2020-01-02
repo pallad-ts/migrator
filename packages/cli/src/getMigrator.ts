@@ -3,7 +3,7 @@ import packageJsonFinder = require('find-package-json');
 import * as fs from 'fs';
 import {Migrator} from "@pallad/migrator-core";
 
-export function getMigrator() {
+export function getMigrator(): Promise<Migrator> | Migrator {
     return getMigratorFunction()();
 }
 

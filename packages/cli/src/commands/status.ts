@@ -9,5 +9,7 @@ export default class Status extends Command {
         for (const entry of state) {
             this.log(`${entry.migration.name} - ${formatStatus(entry.status)}`);
         }
+
+        await migrator.stop();
     }
 }

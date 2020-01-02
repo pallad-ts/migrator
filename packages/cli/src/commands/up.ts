@@ -21,5 +21,7 @@ export default class Up extends Command {
         } else {
             outputMigrationProcess(this, await migrator.runTo('up', args.to));
         }
+
+        await migrator.stop();
     }
 }
