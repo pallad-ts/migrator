@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-sql-state",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "State manager for SQL databases",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -28,7 +28,7 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@pallad/migrator-core": "1.*",
+    "@pallad/migrator-core": "^1.0.2",
     "knex": "^0.20.6"
   },
   "devDependencies": {
