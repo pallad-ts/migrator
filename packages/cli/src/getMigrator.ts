@@ -18,7 +18,8 @@ export function getMigratorFunction(): () => Promise<Migrator> | Migrator {
         if ('migrator' in info) {
             is.assert(is.prop('migrator', String), '"migrator" option in package.json must be a string')(info);
 
-            return loadFromPath(info.migrator);
+            const realPath = fs.realpathSync(info.migrator);
+            return loadFromPath(realPath);
         }
     }
 
@@ -29,7 +30,8 @@ export function getMigratorFunction(): () => Promise<Migrator> | Migrator {
 
     for (const file of fileCandidates) {
         if (fs.existsSync(file)) {
-            return loadFromPath(file);
+            const realPath = fs.realpathSync(file);
+            return loadFromPath(realPath);
         }
     }
 
