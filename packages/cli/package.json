@@ -11,6 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "migrator": "./bin/run"
+  },
   "files": [
     "bin",
     "compiled",
