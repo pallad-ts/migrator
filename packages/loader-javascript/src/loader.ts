@@ -25,7 +25,7 @@ export function loader(options: loader.Options.FromUser) {
             });
 
             for (const entry of result) {
-                migrations.push(createMigrationFromModule(entry));
+                migrations.push(createMigrationFromModule(entry, opts.context));
             }
         }
         return migrations;
