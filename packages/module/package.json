@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Module of @pallad/migrator for @pallad/modules",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
