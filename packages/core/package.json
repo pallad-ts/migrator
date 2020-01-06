@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -27,11 +27,11 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
+    "@types/zen-observable": "^0.8.0",
     "alpha-errors": "^0.3.0",
     "predicates": "^2.0.3",
     "tslib": "^1.10.0",
-    "zen-observable": "^0.8.15",
-    "@types/zen-observable": "^0.8.0"
+    "zen-observable": "^0.8.15"
   },
   "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
 }
