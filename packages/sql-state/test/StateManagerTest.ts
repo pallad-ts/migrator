@@ -77,8 +77,6 @@ describe('StateManager', () => {
     });
 
     describe('adding records', () => {
-
-
         it('success', async () => {
             await stateManager.saveRecord(RECORD_1);
             const state1 = await stateManager.getState();

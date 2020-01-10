@@ -17,16 +17,16 @@ export class StateManager extends _StateManager {
     }
 
     async setup() {
-        const hasTable = await this.knex.schema.hasTable(this.table);
-        if (!hasTable) {
-            await this.knex.schema.createTable(this.table, t => {
-                t.string('name');
-                t.dateTime('date');
-                t.string('status');
-
-                t.unique(['name']);
-            });
-        }
+        await this.knex.raw(`
+            CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}  
+            (
+                "name" varchar(255) PRIMARY KEY,
+                "date" timestamptz,
+                "status" varchar(255)
+            )
+        `, {
+            tableName: this.table
+        });
     }
 
     async getState(): Promise<_StateManager.Record[]> {
