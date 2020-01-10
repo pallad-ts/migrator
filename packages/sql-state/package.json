@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-sql-state",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "State manager for SQL databases",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
