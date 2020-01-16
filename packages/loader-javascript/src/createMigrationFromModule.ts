@@ -7,6 +7,6 @@ export function createMigrationFromModule(path: string, context: any) {
     return new Migration.Simple(
         basename(path, extname(path)),
         module.up.bind(module, context),
-        module.down.bind(module, context)
+        module.down ? module.down.bind(module, context) : undefined
     );
 }
