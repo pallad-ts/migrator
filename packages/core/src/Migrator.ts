@@ -97,6 +97,7 @@ export class Migrator {
                     observer.next(new Migrator.Progress.UnlockSuccess());
                 } catch (e) {
                     observer.next(new Migrator.Progress.UnlockFailure(e));
+                    throw e;
                 }
             };
 
@@ -106,7 +107,7 @@ export class Migrator {
                     observer.next(new Migrator.Progress.LockSuccess());
                 } catch (e) {
                     observer.next(new Migrator.Progress.LockFailure(e));
-                    return;
+                    throw e;
                 }
                 for (const entry of plan) {
                     try {
@@ -135,6 +136,7 @@ export class Migrator {
                         }
                     } catch (e) {
                         observer.next(new Migrator.Progress.MigrationFailed(entry, e));
+                        throw e;
                         break;
                     }
                 }
