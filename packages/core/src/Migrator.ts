@@ -90,8 +90,12 @@ export class Migrator {
 
         const isUp = direction === 'up';
 
+        let lockCreated = false;
         return new Observable(observer => {
             const unlock = async () => {
+                if (!lockCreated) {
+                    return;
+                }
                 try {
                     await this.stateManager.unlock();
                     observer.next(new Migrator.Progress.UnlockSuccess());
@@ -104,6 +108,7 @@ export class Migrator {
             (async () => {
                 try {
                     await this.stateManager.lock();
+                    lockCreated = true;
                     observer.next(new Migrator.Progress.LockSuccess());
                 } catch (e) {
                     observer.next(new Migrator.Progress.LockFailure(e));
