@@ -65,14 +65,8 @@ describe('StateManager', () => {
             await stateManager.lock();
             await stateManager.unlock();
 
-            expect(await connection.schema.hasTable(TABLE_LOCK))
-                .toEqual(false);
-        });
-
-        it('failure', () => {
-            return expect(stateManager.unlock())
-                .rejects
-                .toThrow('No lock to remove');
+            expect(await connection(TABLE_LOCK).select())
+                .toEqual([]);
         });
     });
 

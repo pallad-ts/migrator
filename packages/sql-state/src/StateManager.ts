@@ -27,6 +27,13 @@ export class StateManager extends _StateManager {
         `, {
             tableName: this.table
         });
+
+        await this.knex.raw(`
+            CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.lockTableName)}
+            (
+                "is_locked" int PRIMARY KEY UNIQUE
+            )
+        `);
     }
 
     async getState(): Promise<_StateManager.Record[]> {
@@ -36,11 +43,12 @@ export class StateManager extends _StateManager {
 
     async lock(): Promise<void> {
         try {
-            await this.knex.schema.createTable(this.lockTableName, t => {
-                // nothing
-            });
+            await this.knex(this.lockTableName)
+                .insert({
+                    is_locked: 1
+                });
         } catch (e) {
-            if (e.code === '42P07') {
+            if (e.code === '23505') {
                 throw ERRORS.LOCK_ALREADY_CREATED();
             }
             throw e;
@@ -60,14 +68,7 @@ export class StateManager extends _StateManager {
     }
 
     async unlock(): Promise<void> {
-        try {
-            await this.knex.schema.dropTable(this.lockTableName);
-        } catch (e) {
-            if (e.code === '42P01') {
-                throw ERRORS.NO_LOCK_TO_REMOVE();
-            }
-            throw e;
-        }
+        await this.knex(this.lockTableName).truncate();
     }
 
     async stop() {
