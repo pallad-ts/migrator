@@ -17,23 +17,24 @@ export class StateManager extends _StateManager {
     }
 
     async setup() {
-        await this.knex.raw(`
-            CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}  
-            (
-                "name" varchar(255) PRIMARY KEY,
-                "date" timestamptz,
-                "status" varchar(255)
-            )
-        `, {
-            tableName: this.table
+        await this.knex.transaction(async trx => {
+            await trx.raw(`
+                CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}  
+                (
+                    "name" varchar(255) PRIMARY KEY,
+                    "date" timestamptz,
+                    "status" varchar(255)
+                )
+            `, {
+                tableName: this.table
+            });
+            await trx.raw(`
+                CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.lockTableName)}
+                (
+                    "is_locked" int PRIMARY KEY UNIQUE
+                )
+            `);
         });
-
-        await this.knex.raw(`
-            CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.lockTableName)}
-            (
-                "is_locked" int PRIMARY KEY UNIQUE
-            )
-        `);
     }
 
     async getState(): Promise<_StateManager.Record[]> {

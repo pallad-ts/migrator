@@ -14,12 +14,22 @@ function assertHasDownMigration(migration: Migration) {
 }
 
 export class Migrator {
+    private isStateReady = false;
+
     constructor(private migrations: MigrationsList,
                 private stateManager: StateManager) {
     }
 
+    private async _stateSetup() {
+        if (!this.isStateReady) {
+            this.isStateReady = true;
+            await this.stateManager.setup();
+        }
+        return;
+    }
+
     async getState(): Promise<State[]> {
-        await this.stateManager.setup();
+        await this._stateSetup();
         const records = await this.stateManager.getState();
         const recordsMap = new Map<string, Status.Record>();
 
