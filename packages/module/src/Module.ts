@@ -1,7 +1,7 @@
 import {Module as _Module, StandardActions} from '@pallad/modules';
 import {Container, Definition, reference} from "alpha-dic";
 import {References} from "./References";
-import {createMigrator, Loader, StateManager} from "@pallad/migrator-core/src";
+import {createMigrator, Loader, StateManager} from "@pallad/migrator-core";
 import {loaderAnnotation} from "./loaderAnnotation";
 
 export class Module extends _Module<{ container: Container }> {
