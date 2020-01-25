@@ -5,15 +5,15 @@ import {createMigrator, Loader, StateManager} from "@pallad/migrator-core";
 import {loaderAnnotation} from "./loaderAnnotation";
 
 export class Module extends _Module<{ container: Container }> {
-    readonly stateManageDefinition: Definition = Definition.create(References.MIGRATOR_STATE);
-
-    constructor() {
+    constructor(private options: Module.Options) {
         super('pallad/migrator');
     }
 
     init() {
         this.registerAction(StandardActions.INITIALIZATION, context => {
-            context.container.registerDefinition(this.stateManageDefinition);
+            context.container.definitionWithFactory(References.MIGRATOR_STATE, () => {
+                return this.options.stateManagerFactory();
+            });
 
             context.container.definitionWithFactory(References.MIGRATOR, (
                 loaders: Loader[],
@@ -30,8 +30,10 @@ export class Module extends _Module<{ container: Container }> {
                 )
         })
     }
+}
 
-    static create() {
-        return new Module();
+export namespace Module {
+    export interface Options {
+        stateManagerFactory: () => Promise<StateManager> | StateManager;
     }
 }
