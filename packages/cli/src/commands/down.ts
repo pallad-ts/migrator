@@ -22,9 +22,8 @@ export default class Down extends Command {
         if (flags.planOnly) {
             outputPlan(this, await migrator.getPlan('down', args.to));
         } else {
-            outputMigrationProcess(this, await migrator.runTo('down', args.to));
+            await outputMigrationProcess(this, await migrator.runTo('down', args.to));
+            await migrator.stop();
         }
-
-        await migrator.stop();
     }
 }

@@ -48,8 +48,10 @@ describe('StateManager', () => {
         it('success', async () => {
             await stateManager.lock();
 
-            expect(await connection.schema.hasTable(TABLE_LOCK))
-                .toEqual(true);
+            expect(await connection(TABLE_LOCK).select())
+                .toEqual([
+                    {is_locked: 1}
+                ]);
         });
 
         it('failure', async () => {

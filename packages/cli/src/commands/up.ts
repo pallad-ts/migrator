@@ -19,9 +19,8 @@ export default class Up extends Command {
         if (flags.planOnly) {
             outputPlan(this, await migrator.getPlan('up', args.to));
         } else {
-            outputMigrationProcess(this, await migrator.runTo('up', args.to));
+            await outputMigrationProcess(this, await migrator.runTo('up', args.to))
+            await migrator.stop();
         }
-
-        await migrator.stop();
     }
 }
