@@ -32,9 +32,9 @@ export function outputMigrationProcess(cmd: Command, observer: Observable<Migrat
             },
             complete() {
                 if (hadMigrations) {
-                    cmd.log(chalk.blue('No migrations to run'));
-                } else {
                     cmd.log(chalk.magenta('Completed'));
+                } else {
+                    cmd.log(chalk.blue('No migrations to run'));
                 }
                 resolve();
             },
