@@ -27,12 +27,15 @@
   ],
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
+  "peerDependencies": {
+    "knex": "^0.*"
+  },
   "dependencies": {
-    "@pallad/migrator-core": "^1.0.7",
-    "knex": "^0.20.6"
+    "@pallad/migrator-core": "^1.0.7"
   },
   "devDependencies": {
-    "pg": "^7.17.0"
+    "pg": "^7.17.0",
+    "knex": "^0.*"
   },
   "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
 }
