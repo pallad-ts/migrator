@@ -1,0 +1,33 @@
+{
+  "name": "@pallad/migrator-dynamodb-state",
+  "version": "1.0.0",
+  "description": "State manager for DynamoDB",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "compiled"
+  ],
+  "keywords": [
+    "migrator",
+    "sql",
+    "state"
+  ],
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "peerDependencies": {
+    "aws-sdk": "^2.819.0"
+  },
+  "dependencies": {
+    "@pallad/migrator-core": "^1.0.7",
+    "monet": "^0.9.1"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.819.0"
+  }
+}
