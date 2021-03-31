@@ -2,6 +2,7 @@ import {Command} from "@oclif/command";
 import {getMigrator} from "../getMigrator";
 import {formatStatus} from "../formatStatus";
 
+// eslint-disable-next-line import/no-default-export
 export default class Status extends Command {
     async run() {
         const migrator = await getMigrator();

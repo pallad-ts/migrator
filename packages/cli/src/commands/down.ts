@@ -3,7 +3,9 @@ import {getMigrator} from "../getMigrator";
 import {outputMigrationProcess} from "../outputMigratorProcess";
 import {outputPlan} from "../outputPlan";
 
+// eslint-disable-next-line import/no-default-export
 export default class Down extends Command {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     static args = [
         {
             name: 'to',
@@ -11,6 +13,7 @@ export default class Down extends Command {
         }
     ];
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     static flags = {
         planOnly: flags.boolean({char: 'p'})
     };

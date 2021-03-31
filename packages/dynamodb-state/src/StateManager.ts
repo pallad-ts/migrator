@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {ERRORS, StateManager as _StateManager} from "@pallad/migrator-core";
 import * as AWS from 'aws-sdk';
 import {Maybe} from "monet";
@@ -92,7 +93,7 @@ export class StateManager extends _StateManager {
                         S: record.name
                     },
                     date: {
-                        N: record.date.getTime() + ''
+                        N: String(record.date.getTime())
                     },
                     status: {
                         S: record.status

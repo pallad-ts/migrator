@@ -1,5 +1,5 @@
 import {StateManager as _StateManager, ERRORS} from "@pallad/migrator-core";
-import Knex = require("knex");
+import {Knex} from 'knex';
 
 export class StateManager extends _StateManager {
     constructor(private knex: Knex, private table: string) {
