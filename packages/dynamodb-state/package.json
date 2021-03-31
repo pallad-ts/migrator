@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-dynamodb-state",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "State manager for DynamoDB",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -31,7 +31,7 @@
     "aws-sdk": "^2.819.0"
   },
   "dependencies": {
-    "@pallad/migrator-core": "^1.0.7",
+    "@pallad/migrator-core": "^1.0.8",
     "monet": "^0.9.1"
   },
   "devDependencies": {
