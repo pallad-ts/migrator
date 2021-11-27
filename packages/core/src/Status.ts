@@ -1,5 +1,6 @@
 export type Status = typeof Status.SKIPPED | typeof Status.FINISHED | typeof Status.PENDING;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export namespace Status {
     export const SKIPPED = 'skipped';
     export const PENDING = 'pending';

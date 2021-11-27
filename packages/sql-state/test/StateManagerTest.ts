@@ -1,4 +1,4 @@
-import knex = require('knex');
+import {knex} from 'knex';
 import {StateManager} from "@src/StateManager";
 import {StateManager as _StateManager} from "@pallad/migrator-core";
 

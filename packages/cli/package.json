@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-cli",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "CLI for @pallad/migrator",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
@@ -26,8 +26,7 @@
     "@pallad/migrator-core": "*",
     "chalk": "^3.0.0",
     "find-package-json": "^1.2.0",
-    "predicates": "^2.0.3",
-    "zen-observable": "^0.8.15"
+    "predicates": "^2.0.3"
   },
   "oclif": {
     "commands": "./compiled/commands",

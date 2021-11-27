@@ -1,15 +1,16 @@
-import Observable = require("zen-observable");
 import {Command} from "@oclif/command";
 import {Migrator} from "@pallad/migrator-core";
 import chalk = require('chalk');
 import {formatStatus} from "./formatStatus";
 
-export function outputMigrationProcess(cmd: Command, observer: Observable<Migrator.Progress>) {
+type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
+
+export function outputMigrationProcess(cmd: Command, observer: Awaited<ReturnType<typeof Migrator.prototype['runTo']>>) {
     let hadMigrations = false;
 
     return new Promise((resolve, reject) => {
         observer.subscribe({
-            next(value) {
+            next(value: Migrator.Progress) {
                 if (value instanceof Migrator.Progress.LockSuccess) {
                     cmd.log('Successfully gained lock for migration');
                 } else if (value instanceof Migrator.Progress.LockFailure) {
@@ -38,7 +39,7 @@ export function outputMigrationProcess(cmd: Command, observer: Observable<Migrat
                 }
                 resolve(undefined);
             },
-            error(e) {
+            error(e: Error) {
                 cmd.error(e);
                 reject(e);
             }
