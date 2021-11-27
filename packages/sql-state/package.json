@@ -17,7 +17,6 @@
     "test": "../../node_modules/.bin/pallad-scripts test",
     "compile": "../../node_modules/.bin/pallad-scripts compile",
     "lint": "../../node_modules/.bin/pallad-scripts lint",
-    "prepare": "npm run compile",
     "prepack": "npm run compile"
   },
   "keywords": [
@@ -28,14 +27,10 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "peerDependencies": {
-    "knex": "^0.*"
+    "knex": "^0.95"
   },
   "dependencies": {
-    "@pallad/migrator-core": "^1.0.7"
-  },
-  "devDependencies": {
-    "knex": "^0.*",
-    "pg": "^7.17.0"
+    "@pallad/migrator-core": "*"
   },
   "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
 }

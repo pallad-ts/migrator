@@ -36,7 +36,7 @@ export function outputMigrationProcess(cmd: Command, observer: Observable<Migrat
                 } else {
                     cmd.log(chalk.blue('No migrations to run'));
                 }
-                resolve();
+                resolve(undefined);
             },
             error(e) {
                 cmd.error(e);

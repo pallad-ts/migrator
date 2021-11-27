@@ -1,5 +1,5 @@
 import {StateManager as _StateManager, ERRORS} from "@pallad/migrator-core";
-import Knex = require("knex");
+import {Knex} from 'knex';
 
 export class StateManager extends _StateManager {
     constructor(private knex: Knex, private table: string) {
@@ -19,10 +19,10 @@ export class StateManager extends _StateManager {
     async setup() {
         await this.knex.transaction(async trx => {
             await trx.raw(`
-                CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}  
+                CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}
                 (
-                    "name" varchar(255) PRIMARY KEY,
-                    "date" timestamptz,
+                    "name"   varchar(255) PRIMARY KEY,
+                    "date"   timestamptz,
                     "status" varchar(255)
                 )
             `, {
@@ -48,7 +48,7 @@ export class StateManager extends _StateManager {
                 .insert({
                     is_locked: 1
                 });
-        } catch (e) {
+        } catch (e: any) {
             if (e.code === '23505') {
                 throw ERRORS.LOCK_ALREADY_CREATED();
             }
@@ -60,7 +60,7 @@ export class StateManager extends _StateManager {
         try {
             await this.knex(this.table)
                 .insert(record);
-        } catch (e) {
+        } catch (e: any) {
             if (e.code === '23505') {
                 throw ERRORS.RECORD_DUPLICATE(`Migrator record "${record.name}" already created`);
             }

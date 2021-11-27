@@ -27,7 +27,6 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@types/zen-observable": "^0.8.0",
     "alpha-errors": "^0.3.0",
     "predicates": "^2.0.3",
     "tslib": "^1.10.0",

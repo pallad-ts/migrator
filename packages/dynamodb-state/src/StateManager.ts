@@ -75,7 +75,7 @@ export class StateManager extends _StateManager {
                     }
                 }
             }).promise();
-        } catch (e) {
+        } catch (e: any) {
             if (e.code === 'ConditionalCheckFailedException') {
                 throw ERRORS.LOCK_ALREADY_CREATED();
             }
@@ -92,7 +92,7 @@ export class StateManager extends _StateManager {
                         S: record.name
                     },
                     date: {
-                        N: record.date.getTime() + ''
+                        N: String(record.date.getTime())
                     },
                     status: {
                         S: record.status
@@ -104,7 +104,7 @@ export class StateManager extends _StateManager {
                     }
                 }
             }).promise();
-        } catch (e) {
+        } catch (e: any) {
             if (e.code === 'ConditionalCheckFailedException') {
                 throw ERRORS.RECORD_DUPLICATE(`Migrator record "${record.name}" already created`);
             }
@@ -168,7 +168,7 @@ export class StateManager extends _StateManager {
                 TableName: this.config.table
             }).promise();
             return Maybe.fromFalsy(result.Table);
-        } catch (e) {
+        } catch (e: any) {
             if (e.code === 'ResourceNotFoundException') {
                 return Maybe.None();
             }

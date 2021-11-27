@@ -20,7 +20,7 @@ export class Migrator {
                 private stateManager: StateManager) {
     }
 
-    private async _stateSetup() {
+    private async stateSetup() {
         if (!this.isStateReady) {
             this.isStateReady = true;
             await this.stateManager.setup();
@@ -29,7 +29,7 @@ export class Migrator {
     }
 
     async getState(): Promise<State[]> {
-        await this._stateSetup();
+        await this.stateSetup();
         const records = await this.stateManager.getState();
         const recordsMap = new Map<string, Status.Record>();
 
@@ -109,7 +109,7 @@ export class Migrator {
                 try {
                     await this.stateManager.unlock();
                     observer.next(new Migrator.Progress.UnlockSuccess());
-                } catch (e) {
+                } catch (e: any) {
                     observer.next(new Migrator.Progress.UnlockFailure(e));
                     throw e;
                 }
@@ -120,7 +120,7 @@ export class Migrator {
                     await this.stateManager.lock();
                     lockCreated = true;
                     observer.next(new Migrator.Progress.LockSuccess());
-                } catch (e) {
+                } catch (e: any) {
                     observer.next(new Migrator.Progress.LockFailure(e));
                     throw e;
                 }
@@ -149,7 +149,7 @@ export class Migrator {
                             }
                             observer.next(new Migrator.Progress.MigrationFinished(entry));
                         }
-                    } catch (e) {
+                    } catch (e: any) {
                         observer.next(new Migrator.Progress.MigrationFailed(entry, e));
                         throw e;
                         break;
@@ -163,7 +163,7 @@ export class Migrator {
                 .catch(async e => {
                     try {
                         await unlock();
-                    } catch (e) {
+                    } catch (e: any) {
                         observer.error(e);
                         return;
                     }
