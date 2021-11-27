@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-loader-javascript",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "Migrations loader for javascript",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -25,7 +25,7 @@
     "typescript"
   ],
   "dependencies": {
-    "@pallad/migrator-core": "*",
+    "@pallad/migrator-core": "^1.1.0",
     "glob": "^7.1.6"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
