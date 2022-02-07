@@ -198,6 +198,7 @@ export class Migrator {
         });
 
         const subject = new Subject<Migrator.Progress>();
+        observable.subscribe(subject);
         if (this.options?.observers) {
             for (const subscriber of this.options.observers) {
                 subject.subscribe(subscriber);
