@@ -210,7 +210,7 @@ export class Migrator {
 
 export namespace Migrator {
     export interface Options {
-        observers?: Array<Observer<Progress>>
+        observers?: Array<Partial<Observer<Progress>>>
     }
 
     export type Direction = 'up' | 'down';
