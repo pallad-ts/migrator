@@ -5,7 +5,7 @@ import * as is from 'predicates';
 import {MigrationsList} from "./MigrationsList";
 import {State} from "./State";
 import {Status} from "./Status";
-import {Observable, Observer} from 'zen-observable-ts';
+import {Observable, Observer, Subject} from 'rxjs';
 
 function assertHasDownMigration(migration: Migration) {
     if (!is.hasProperty('down', migration)) {
@@ -197,12 +197,13 @@ export class Migrator {
                 })
         });
 
+        const subject = new Subject<Migrator.Progress>();
         if (this.options?.observers) {
             for (const subscriber of this.options.observers) {
-                observable.subscribe(subscriber);
+                subject.subscribe(subscriber);
             }
         }
-        return observable;
+        return subject;
     }
 }
 
