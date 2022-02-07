@@ -1,6 +1,5 @@
 export type Status = typeof Status.SKIPPED | typeof Status.FINISHED | typeof Status.PENDING;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export namespace Status {
     export const SKIPPED = 'skipped';
     export const PENDING = 'pending';
@@ -19,6 +18,4 @@ export namespace Status {
     export function isFinished(status: Status): status is typeof FINISHED {
         return status === FINISHED;
     }
-
-    export type MigrationStatus = Exclude<Status, 'pending'>;
 }

@@ -1,12 +1,12 @@
 import {Module as _Module, StandardActions} from '@pallad/modules';
-import {Container, Definition, reference} from "alpha-dic";
+import {Container, reference} from "alpha-dic";
 import {References} from "./References";
-import {createMigrator, Loader, StateManager} from "@pallad/migrator-core";
+import {createMigrator, Loader, Migrator, StateManager} from "@pallad/migrator-core";
 import {loaderAnnotation} from "./loaderAnnotation";
 
 export class Module extends _Module<{ container: Container }> {
     constructor(private options: Module.Options) {
-        super('pallad/migrator');
+        super('@pallad/migrator');
     }
 
     init() {
@@ -21,7 +21,8 @@ export class Module extends _Module<{ container: Container }> {
             ) => {
                 return createMigrator({
                     loaders,
-                    stateManager
+                    stateManager,
+                    ...this.options
                 })
             })
                 .withArgs(
@@ -35,5 +36,6 @@ export class Module extends _Module<{ container: Container }> {
 export namespace Module {
     export interface Options {
         stateManagerFactory: () => Promise<StateManager> | StateManager;
+        observers?: Migrator.Options['observers']
     }
 }

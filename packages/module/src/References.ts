@@ -1,4 +1,4 @@
 export const References = {
-    MIGRATOR: 'migrator',
-    MIGRATOR_STATE: 'migrator-state'
+    MIGRATOR: '@pallad/migrator/migrator',
+    MIGRATOR_STATE: '@pallad/migrator/state'
 };

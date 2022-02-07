@@ -11,22 +11,22 @@ export function outputMigrationProcess(cmd: Command, observer: Awaited<ReturnTyp
     return new Promise((resolve, reject) => {
         observer.subscribe({
             next(value: Migrator.Progress) {
-                if (value instanceof Migrator.Progress.LockSuccess) {
+                if (value.type === 'lock-success') {
                     cmd.log('Successfully gained lock for migration');
-                } else if (value instanceof Migrator.Progress.LockFailure) {
+                } else if (value.type === 'lock-failure') {
                     cmd.error('Could not lock migration. Another migration in progress', {exit: 1});
-                } else if (value instanceof Migrator.Progress.UnlockSuccess) {
+                } else if (value.type === 'unlock-success') {
                     cmd.log('Successfully removed lock');
-                } else if (value instanceof Migrator.Progress.UnlockFailure) {
+                } else if (value.type === 'unlock-failure') {
                     cmd.error(`Could not unlock migration. Fatal error: ${value.error.message}`);
-                } else if (value instanceof Migrator.Progress.MigrationStarted) {
+                } else if (value.type === 'migration-started') {
                     hadMigrations = true;
                     cmd.log('%s - %s: %s', value.planEntry.migration.name, value.planEntry.direction, chalk.cyan('started'));
-                } else if (value instanceof Migrator.Progress.MigrationFinished) {
+                } else if (value.type === 'migration-finished') {
                     cmd.log('%s - %s: %s', value.planEntry.migration.name, value.planEntry.direction, formatStatus('finished'))
-                } else if (value instanceof Migrator.Progress.MigrationSkipped) {
+                } else if (value.type === 'migration-skipped') {
                     cmd.log('%s - %s: %s', value.planEntry.migration.name, value.planEntry.direction, formatStatus('skipped'))
-                } else if (value instanceof Migrator.Progress.MigrationFailed) {
+                } else if (value.type === 'migration-failed') {
                     cmd.log('%s - %s: %s', value.planEntry.migration.name, value.planEntry.direction, chalk.red('failed'));
                     cmd.error(value.error);
                 }

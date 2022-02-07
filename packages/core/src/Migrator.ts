@@ -1,11 +1,11 @@
 import {Migration} from "./Migration";
 import {StateManager} from "./StateManager";
 import {PlanEntry} from "./PlanEntry";
-import Observable = require("zen-observable");
 import * as is from 'predicates';
 import {MigrationsList} from "./MigrationsList";
 import {State} from "./State";
 import {Status} from "./Status";
+import {Observable, Observer} from 'zen-observable-ts';
 
 function assertHasDownMigration(migration: Migration) {
     if (!is.hasProperty('down', migration)) {
@@ -16,8 +16,11 @@ function assertHasDownMigration(migration: Migration) {
 export class Migrator {
     private isStateReady = false;
 
-    constructor(private migrations: MigrationsList,
-                private stateManager: StateManager) {
+    constructor(
+        private migrations: MigrationsList,
+        private stateManager: StateManager,
+        private options?: Migrator.Options,
+    ) {
     }
 
     private async stateSetup() {
@@ -101,16 +104,21 @@ export class Migrator {
         const isUp = direction === 'up';
 
         let lockCreated = false;
-        return new Observable(observer => {
+        const observable = new Observable<Migrator.Progress>(observer => {
             const unlock = async () => {
                 if (!lockCreated) {
                     return;
                 }
                 try {
                     await this.stateManager.unlock();
-                    observer.next(new Migrator.Progress.UnlockSuccess());
+                    observer.next({
+                        type: 'unlock-success'
+                    });
                 } catch (e: any) {
-                    observer.next(new Migrator.Progress.UnlockFailure(e));
+                    observer.next({
+                        type: 'unlock-failure',
+                        error: e
+                    });
                     throw e;
                 }
             };
@@ -119,14 +127,22 @@ export class Migrator {
                 try {
                     await this.stateManager.lock();
                     lockCreated = true;
-                    observer.next(new Migrator.Progress.LockSuccess());
+                    observer.next({
+                        type: 'lock-success'
+                    });
                 } catch (e: any) {
-                    observer.next(new Migrator.Progress.LockFailure(e));
+                    observer.next({
+                        type: 'lock-failure',
+                        error: e
+                    });
                     throw e;
                 }
                 for (const entry of plan) {
                     try {
-                        observer.next(new Migrator.Progress.MigrationStarted(entry));
+                        observer.next({
+                            type: 'migration-started',
+                            planEntry: entry
+                        });
                         const result = await entry.migration[direction]!();
                         if (Migration.isSkip(result)) {
                             if (isUp) {
@@ -136,7 +152,10 @@ export class Migrator {
                                     status: 'skipped'
                                 });
                             }
-                            observer.next(new Migrator.Progress.MigrationSkipped(entry));
+                            observer.next({
+                                type: 'migration-skipped',
+                                planEntry: entry
+                            });
                         } else {
                             if (isUp) {
                                 await this.stateManager.saveRecord({
@@ -147,10 +166,17 @@ export class Migrator {
                             } else {
                                 await this.stateManager.deleteRecord(entry.migration.name);
                             }
-                            observer.next(new Migrator.Progress.MigrationFinished(entry));
+                            observer.next({
+                                type: 'migration-finished',
+                                planEntry: entry
+                            });
                         }
                     } catch (e: any) {
-                        observer.next(new Migrator.Progress.MigrationFailed(entry, e));
+                        observer.next({
+                            type: 'migration-failed',
+                            planEntry: entry,
+                            error: e
+                        });
                         throw e;
                         break;
                     }
@@ -169,11 +195,22 @@ export class Migrator {
                     }
                     observer.error(e);
                 })
-        })
+        });
+
+        if (this.options?.observers) {
+            for (const subscriber of this.options.observers) {
+                observable.subscribe(subscriber);
+            }
+        }
+        return observable;
     }
 }
 
 export namespace Migrator {
+    export interface Options {
+        observers?: Array<Observer<Progress>>
+    }
+
     export type Direction = 'up' | 'down';
     export type Progress = Progress.LockSuccess |
         Progress.LockFailure |
@@ -185,42 +222,43 @@ export namespace Migrator {
         Progress.MigrationFinished;
 
     export namespace Progress {
-        export class LockSuccess {
-
+        export interface LockSuccess {
+            readonly type: 'lock-success'
         }
 
-        export class LockFailure {
-            constructor(readonly error: Error) {
-            }
+        export interface LockFailure {
+            readonly type: 'lock-failure';
+            readonly error: Error,
         }
 
-        export class UnlockSuccess {
-
+        export interface UnlockSuccess {
+            readonly type: 'unlock-success';
         }
 
-        export class UnlockFailure {
-            constructor(readonly error: Error) {
-            }
+        export interface UnlockFailure {
+            readonly type: 'unlock-failure';
+            readonly error: Error;
         }
 
-        export class MigrationStarted {
-            constructor(readonly planEntry: PlanEntry) {
-            }
+        export interface MigrationStarted {
+            readonly type: 'migration-started';
+            readonly planEntry: PlanEntry;
         }
 
-        export class MigrationSkipped {
-            constructor(readonly planEntry: PlanEntry) {
-            }
+        export interface MigrationSkipped {
+            readonly type: 'migration-skipped';
+            readonly planEntry: PlanEntry;
         }
 
-        export class MigrationFailed {
-            constructor(readonly planEntry: PlanEntry, readonly error: Error) {
-            }
+        export interface MigrationFailed {
+            readonly type: 'migration-failed';
+            readonly planEntry: PlanEntry;
+            readonly error: Error;
         }
 
-        export class MigrationFinished {
-            constructor(readonly planEntry: PlanEntry) {
-            }
+        export interface MigrationFinished {
+            readonly type: 'migration-finished';
+            readonly planEntry: PlanEntry;
         }
     }
 }
