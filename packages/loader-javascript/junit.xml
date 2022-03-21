@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="2.071">
+  <testsuite name="loader" errors="0" failures="0" skipped="0" timestamp="2022-03-21T20:12:33" time="1.93" tests="3">
+    <testcase classname="loader typescript" name="loader typescript" time="0.018">
+    </testcase>
+    <testcase classname="loader javascript" name="loader javascript" time="0.003">
+    </testcase>
+    <testcase classname="loader mixed" name="loader mixed" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>

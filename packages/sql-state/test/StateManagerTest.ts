@@ -1,9 +1,10 @@
-import {knex} from 'knex';
+import {Knex, knex} from 'knex';
+
 import {StateManager} from "@src/StateManager";
 import {StateManager as _StateManager} from "@pallad/migrator-core";
 
 describe('StateManager', () => {
-    const connection = knex({
+    const connection: Knex<any, Array<Record<string, any>>> = knex({
         client: 'pg',
         connection: {
             host: process.env.DB_HOST,
