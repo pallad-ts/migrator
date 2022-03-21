@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-sql-state",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "State manager for SQL databases",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -30,7 +30,7 @@
     "knex": "^1"
   },
   "dependencies": {
-    "@pallad/migrator-core": "^1.0.8"
+    "@pallad/migrator-core": "^1.1.5"
   },
   "devDependencies": {
     "knex": "^1",
