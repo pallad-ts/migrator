@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "description": "CLI for @pallad/migrator",
   "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
-    "prepack": "npm run compile && ../../node_modules/.bin/oclif-dev manifest",
+    "prepack": "oclif manifest && oclif readme && npm run compile",
+    "postpack": "shx rm -f oclif.manifest.json",
     "compile": "../../node_modules/.bin/pallad-scripts compile",
     "lint": "../../node_modules/.bin/pallad-scripts lint"
   },
@@ -22,19 +22,26 @@
   "dependencies": {
     "@oclif/core": "^3.18.1",
     "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^4",
     "@pallad/migrator-core": "^1.2.0",
     "chalk": "^3.0.0",
     "find-package-json": "^1.2.0",
     "predicates": "^2.0.3"
   },
+  "devDependencies": {
+    "oclif": "^4",
+    "shx": "^0.3.3"
+  },
+
   "oclif": {
     "commands": "./compiled/commands",
     "bin": "migrator",
-    "plugins": [
-      "@oclif/plugin-help"
+    "devPlugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
     ]
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
-  "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
+  "gitHead": "2ad7b76b6a9b20aff17257a73f0943ad5197fe32"
 }

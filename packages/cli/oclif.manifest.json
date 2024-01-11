@@ -1,0 +1,86 @@
+{
+  "commands": {
+    "down": {
+      "aliases": [],
+      "args": {
+        "to": {
+          "name": "to",
+          "required": true
+        }
+      },
+      "flags": {
+        "planOnly": {
+          "char": "p",
+          "name": "planOnly",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "down",
+      "pluginAlias": "@pallad/migrator-cli",
+      "pluginName": "@pallad/migrator-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "compiled",
+        "commands",
+        "down.js"
+      ]
+    },
+    "status": {
+      "aliases": [],
+      "args": {},
+      "flags": {},
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "status",
+      "pluginAlias": "@pallad/migrator-cli",
+      "pluginName": "@pallad/migrator-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "compiled",
+        "commands",
+        "status.js"
+      ]
+    },
+    "up": {
+      "aliases": [],
+      "args": {
+        "to": {
+          "name": "to",
+          "required": false
+        }
+      },
+      "flags": {
+        "planOnly": {
+          "char": "p",
+          "name": "planOnly",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "up",
+      "pluginAlias": "@pallad/migrator-cli",
+      "pluginName": "@pallad/migrator-cli",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": [
+        "compiled",
+        "commands",
+        "up.js"
+      ]
+    }
+  },
+  "version": "1.2.0"
+}
