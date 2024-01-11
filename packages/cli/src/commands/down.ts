@@ -1,4 +1,4 @@
-import {Command, flags} from "@oclif/command";
+import {Command, Flags, Args} from "@oclif/core";
 import {getMigrator} from "../getMigrator";
 import {outputMigrationProcess} from "../outputMigratorProcess";
 import {outputPlan} from "../outputPlan";
@@ -6,20 +6,17 @@ import {outputPlan} from "../outputPlan";
 // eslint-disable-next-line import/no-default-export
 export default class Down extends Command {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    static args = [
-        {
-            name: 'to',
-            required: true
-        }
-    ];
+    static args = {
+        to: Args.string({required: true})
+    };
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
     static flags = {
-        planOnly: flags.boolean({char: 'p'})
+        planOnly: Flags.boolean({char: 'p'})
     };
 
     async run() {
-        const {args, flags} = this.parse(Down);
+        const {args, flags} = await this.parse(Down);
         const migrator = await getMigrator();
 
         if (flags.planOnly) {

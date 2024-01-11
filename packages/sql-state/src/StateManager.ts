@@ -21,17 +21,28 @@ export class StateManager extends _StateManager {
             await trx.raw(`
                 CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.table)}
                 (
-                    "name"   varchar(255) PRIMARY KEY,
-                    "date"   timestamptz,
-                    "status" varchar(255)
+                    "name"
+                    varchar
+                (
+                    255
+                ) PRIMARY KEY,
+                    "date" timestamptz,
+                    "status" varchar
+                (
+                    255
                 )
+                    )
             `, {
                 tableName: this.table
             });
             await trx.raw(`
                 CREATE TABLE IF NOT EXISTS ${this.knex.ref(this.lockTableName)}
                 (
-                    "is_locked" int PRIMARY KEY UNIQUE
+                    "is_locked"
+                    int
+                    PRIMARY
+                    KEY
+                    UNIQUE
                 )
             `);
         });
@@ -50,7 +61,7 @@ export class StateManager extends _StateManager {
                 });
         } catch (e: any) {
             if (e.code === '23505') {
-                throw ERRORS.LOCK_ALREADY_CREATED();
+                throw ERRORS.LOCK_ALREADY_CREATED.create();
             }
             throw e;
         }
@@ -62,7 +73,7 @@ export class StateManager extends _StateManager {
                 .insert(record);
         } catch (e: any) {
             if (e.code === '23505') {
-                throw ERRORS.RECORD_DUPLICATE(`Migrator record "${record.name}" already created`);
+                throw ERRORS.RECORD_DUPLICATE.create(`Migrator record "${record.name}" already created`);
             }
             throw e;
         }

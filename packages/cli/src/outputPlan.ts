@@ -1,5 +1,5 @@
 import {PlanEntry} from "@pallad/migrator-core";
-import {Command} from "@oclif/command";
+import {Command} from "@oclif/core";
 import * as chalk from "chalk";
 
 export function outputPlan(cmd: Command, plan: PlanEntry[]) {

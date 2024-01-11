@@ -20,9 +20,8 @@
     "oclif.manifest.json"
   ],
   "dependencies": {
-    "@oclif/command": "^1.8.4",
-    "@oclif/config": "^1.17.1",
-    "@oclif/plugin-help": "^3.2.7",
+    "@oclif/core": "^3.18.1",
+    "@oclif/plugin-help": "^6",
     "@pallad/migrator-core": "^1.1.5",
     "chalk": "^3.0.0",
     "find-package-json": "^1.2.0",

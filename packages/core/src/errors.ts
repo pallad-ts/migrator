@@ -1,11 +1,9 @@
-import {ErrorsDomain, generators} from "alpha-errors";
+import {Domain, formatCodeFactory, ErrorDescriptor} from '@pallad/errors';
 
-export const ERRORS = ErrorsDomain.create({
-    codeGenerator: generators.formatCode('MIG_%d')
-})
-    .createErrors(create => {
-        return {
-            LOCK_ALREADY_CREATED: create('Lock already created'),
-            RECORD_DUPLICATE: create('Record duplicate')
-        };
-    });
+const code = formatCodeFactory("MIG_%c");
+
+export const errorsDomain = new Domain();
+export const ERRORS = errorsDomain.addErrorsDescriptorsMap({
+    LOCK_ALREADY_CREATED: ErrorDescriptor.useDefaultMessage(code(1), 'Lock already created'),
+    RECORD_DUPLICATE: ErrorDescriptor.useDefaultMessage(code(2), 'Record duplicate')
+});

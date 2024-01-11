@@ -1,4 +1,4 @@
-import {Command} from "@oclif/command";
+import {Command} from "@oclif/core";
 import {Migrator} from "@pallad/migrator-core";
 import chalk = require('chalk');
 import {formatStatus} from "./formatStatus";

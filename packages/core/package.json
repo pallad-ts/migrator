@@ -26,10 +26,10 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "alpha-errors": "^0.3.0",
+    "@pallad/errors": "^1.0.1",
     "predicates": "^2.0.3",
     "rxjs": "^7",
-    "tslib": "^1.10.0"
+    "tslib": "^2"
   },
   "gitHead": "a94c76989ef7683e109ca75489516f3ecfdc405b"
 }

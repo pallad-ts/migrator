@@ -4,7 +4,8 @@
     "rootDir": ".",
     "outDir": "../compiled",
     "composite": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "skipLibCheck": true
   },
   "include": [
     "**/*"
