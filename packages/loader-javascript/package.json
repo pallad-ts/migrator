@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-loader-javascript",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Migrations loader for javascript",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
