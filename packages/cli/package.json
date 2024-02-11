@@ -12,7 +12,7 @@
     "access": "public"
   },
   "bin": {
-    "migrator": "./bin/run"
+    "migrator": "./bin/run.js"
   },
   "files": [
     "bin",
