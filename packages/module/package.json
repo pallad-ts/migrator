@@ -18,7 +18,7 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@pallad/container": "^1.0.0",
+    "@pallad/container": "^1.1.0",
     "@pallad/migrator-core": "^1.2.1"
   },
   "devDependencies": {
