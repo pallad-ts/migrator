@@ -2,12 +2,20 @@ import * as is from 'predicates';
 import packageJsonFinder = require('find-package-json');
 import * as fs from 'fs';
 import {Migrator} from "@pallad/migrator-core";
+import {pathToFileURL} from "node:url";
 
-export function getMigrator(): Promise<Migrator> | Migrator {
-    return getMigratorFunction()();
+export async function getMigrator(): Promise<Migrator> {
+    const migratorFunction = await getMigratorFunction();
+
+    const migrator = await migratorFunction();
+    if (!(migrator instanceof Migrator)) {
+        throw new Error('Returned object is not a Migrator instance');
+    }
+
+    return migrator;
 }
 
-export function getMigratorFunction(): () => Promise<Migrator> | Migrator {
+export async function getMigratorFunction(): Promise<() => unknown> {
     if (process.env.MIGRATOR_CONFIG) {
         return loadFromPath(process.env.MIGRATOR_CONFIG);
     }
@@ -38,22 +46,52 @@ export function getMigratorFunction(): () => Promise<Migrator> | Migrator {
     throw new Error('Could not find migrator config');
 }
 
-function loadFromPath(path: string) {
-    return getFuncFromModule(require(path), path);
+
+async function loadFromPath(path: string) {
+    const module = await loadModule(path);
+    return getFuncFromModule(module, path);
 }
 
-function getFuncFromModule(module: any, path: string) {
+// this is highly inspired from https://github.com/cosmiconfig/cosmiconfig/blob/main/src/loaders.ts
+async function loadModule(modulePath: string): Promise<unknown> {
+    const realModulePath = fs.realpathSync(modulePath);
+    try {
+        const fileUrl = pathToFileURL(realModulePath);
+        return await import(fileUrl.href);
+    } catch (error) {
+        try {
+            return require(realModulePath);
+        } catch (requireError: unknown) {
+            if (
+                (requireError instanceof Error && (requireError as any).code === "ERR_REQUIRE_ESM") ||
+                (requireError instanceof SyntaxError &&
+                    requireError.toString().includes("Cannot use import statement outside a module"))
+            ) {
+                throw error;
+            }
+
+            throw requireError;
+        }
+    }
+}
+
+function getFuncFromModule(module: unknown, path: string): () => unknown {
     if (is.func(module)) {
-        return module;
+        return module as () => unknown
     }
 
-    if (!is.hasProperty('default', module)) {
-        throw new Error(`There is no default export or module is not a function at path: ${path} `);
+    // eslint-disable-next-line no-null/no-null
+    if (typeof module === 'object' && module !== null) {
+        if (!('default' in module)) {
+            throw new Error(`There is no default export or module is not a function at path: ${path} `);
+        }
+
+        if (!is.func(module.default)) {
+            throw new Error(`Default export in "${path}" is not a function`);
+        }
+
+        return module.default as () => unknown;
     }
 
-    if (!is.func(module.default)) {
-        throw new Error(`Default export in "${path}" is not a function`);
-    }
-
-    return module.default;
+    throw new Error(`Module at path "${path}" is not a function`);
 }
