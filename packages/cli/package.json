@@ -1,6 +1,6 @@
 {
   "name": "@pallad/migrator-cli",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "CLI for @pallad/migrator",
   "scripts": {
     "prepack": "oclif manifest && oclif readme && npm run compile",
